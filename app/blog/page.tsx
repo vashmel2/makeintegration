@@ -10,6 +10,17 @@ export const metadata: Metadata = {
 
 const posts = [
   {
+    slug: "how-to-check-the-health-of-your-make-scenarios",
+    title: "Your Make.com Scenario Works. But Is It Actually Built Well?",
+    excerpt:
+      "A working scenario and a well-built scenario are two different things. The free Scenario Analyzer gives yours a health score, flags structural issues, and estimates what it costs you in operations per run.",
+    category: "Tool Guide",
+    categoryColor: "text-blue-400 bg-blue-400/10",
+    readTime: "7 min read",
+    publishedAt: "2026-03-11",
+    featured: true,
+  },
+  {
     slug: "how-to-document-your-make-scenarios",
     title: "Your Make.com Scenario Works Great. Can You Explain How?",
     excerpt:
@@ -18,7 +29,7 @@ const posts = [
     categoryColor: "text-blue-400 bg-blue-400/10",
     readTime: "6 min read",
     publishedAt: "2026-03-11",
-    featured: true,
+    featured: false,
   },
   {
     slug: "how-to-debug-make-webhooks-with-webhook-inspector",
