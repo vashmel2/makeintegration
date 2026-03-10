@@ -4,9 +4,16 @@ import { ArrowRight, Webhook, FileText, BarChart2 } from "lucide-react"
 import { TOOLS } from "@/lib/constants"
 
 export const metadata: Metadata = {
-  title: "Make.com Tools",
+  title: "Free Make.com Tools | MakeIntegration",
   description:
-    "Free, browser-based utilities for Make.com automation developers. No login required.",
+    "Free, browser-based utilities for Make.com automation developers. Inspect webhooks, document scenarios, analyze health and operation costs. No login required.",
+  openGraph: {
+    title: "Free Make.com Tools | MakeIntegration",
+    description:
+      "Free browser-based tools for Make.com builders. Inspect webhooks, document scenarios, analyze health and operation costs.",
+    url: "https://makeintegration.com/tools",
+    type: "website",
+  },
 }
 
 const toolIcons: Record<string, React.ElementType> = {

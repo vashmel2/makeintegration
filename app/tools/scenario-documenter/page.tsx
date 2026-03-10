@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react"
 import { DocumenterPanel } from "@/components/tools/ScenarioDocumenter/DocumenterPanel"
 
 export const metadata: Metadata = {
-  title: "Scenario Documenter",
+  title: "Scenario Documenter for Make.com | MakeIntegration",
   description:
     "Paste your Make.com blueprint JSON and get clean, shareable documentation instantly. Runs entirely in your browser.",
 }

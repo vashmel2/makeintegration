@@ -7,6 +7,13 @@ export const metadata: Metadata = {
   title: "Blog | MakeIntegration",
   description:
     "Tutorials, tips, and deep dives for Make.com builders. Learn how to automate smarter.",
+  openGraph: {
+    title: "Blog | MakeIntegration",
+    description:
+      "Tutorials, tips, and deep dives for Make.com builders. Learn how to automate smarter.",
+    url: "https://makeintegration.com/blog",
+    type: "website",
+  },
 }
 
 const posts = BLOG_POSTS

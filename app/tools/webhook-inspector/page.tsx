@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react"
 import { InspectorPanel } from "@/components/tools/WebhookInspector/InspectorPanel"
 
 export const metadata: Metadata = {
-  title: "Webhook Inspector",
+  title: "Webhook Inspector for Make.com | MakeIntegration",
   description:
     "Generate a unique URL and capture real-time webhook payloads from Make.com with full header and body inspection.",
 }

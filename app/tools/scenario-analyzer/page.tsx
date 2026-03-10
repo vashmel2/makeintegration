@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react"
 import { AnalyzerPanel } from "@/components/tools/ScenarioAnalyzer/AnalyzerPanel"
 
 export const metadata: Metadata = {
-  title: "Scenario Analyzer",
+  title: "Scenario Analyzer for Make.com | MakeIntegration",
   description:
     "Get a health score and actionable recommendations for your Make.com scenario. Checks for missing error handlers, empty branches, operation costs, and more. Runs in your browser.",
 }
