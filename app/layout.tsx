@@ -17,8 +17,9 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://makeintegration.com"),
   title: {
-    default: "MakeIntegration — The Missing Toolkit for Make.com Builders",
+    default: "MakeIntegration - The Missing Toolkit for Make.com Builders",
     template: "%s | MakeIntegration",
   },
   description:
@@ -28,6 +29,10 @@ export const metadata: Metadata = {
     siteName: "MakeIntegration",
     locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@makeintegration",
   },
 }
 

@@ -1,6 +1,20 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowRight, Webhook, FileText, BarChart2, Zap } from "lucide-react"
 import { TOOLS } from "@/lib/constants"
+
+export const metadata: Metadata = {
+  title: "MakeIntegration - Free Tools for Make.com Builders",
+  description:
+    "Free browser-based tools for Make.com automation builders. Inspect webhooks, document scenarios, analyze health and operation costs. No login required.",
+  openGraph: {
+    title: "MakeIntegration - Free Tools for Make.com Builders",
+    description:
+      "Free browser-based tools for Make.com automation builders. Inspect webhooks, document scenarios, analyze health and operation costs.",
+    url: "https://makeintegration.com",
+    type: "website",
+  },
+}
 
 const toolIcons: Record<string, React.ElementType> = {
   webhook: Webhook,

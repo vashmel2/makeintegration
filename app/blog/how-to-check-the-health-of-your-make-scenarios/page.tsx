@@ -9,8 +9,21 @@ export const metadata: Metadata = {
 }
 
 export default function ScenarioAnalyzerPost() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: "Your Make.com Scenario Works. But Is It Actually Built Well?",
+    description:
+      "A working scenario and a well-built scenario are two different things. The free Scenario Analyzer gives yours a health score and flags issues before they cost you.",
+    url: "https://makeintegration.com/blog/how-to-check-the-health-of-your-make-scenarios",
+    datePublished: "2026-03-11",
+    author: { "@type": "Organization", name: "MakeIntegration", url: "https://makeintegration.com" },
+    publisher: { "@type": "Organization", name: "MakeIntegration", url: "https://makeintegration.com" },
+  }
+
   return (
-    <main className="min-h-screen">
+    <div className="min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Back link */}
       <div className="mx-auto max-w-3xl px-4 pt-8">
         <Link
@@ -366,6 +379,6 @@ export default function ScenarioAnalyzerPost() {
 
         </div>
       </article>
-    </main>
+    </div>
   )
 }

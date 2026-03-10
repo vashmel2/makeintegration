@@ -9,8 +9,21 @@ export const metadata: Metadata = {
 }
 
 export default function ScenarioDocumenterPost() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: "Your Make.com Scenario Works Great. Can You Explain How?",
+    description:
+      "Built a Make.com scenario and now nobody (including you) knows how it works? The free Scenario Documenter turns your blueprint into clean, readable docs in seconds.",
+    url: "https://makeintegration.com/blog/how-to-document-your-make-scenarios",
+    datePublished: "2026-03-11",
+    author: { "@type": "Organization", name: "MakeIntegration", url: "https://makeintegration.com" },
+    publisher: { "@type": "Organization", name: "MakeIntegration", url: "https://makeintegration.com" },
+  }
+
   return (
-    <main className="min-h-screen">
+    <div className="min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Back link */}
       <div className="mx-auto max-w-3xl px-4 pt-8">
         <Link
@@ -332,6 +345,6 @@ export default function ScenarioDocumenterPost() {
 
         </div>
       </article>
-    </main>
+    </div>
   )
 }

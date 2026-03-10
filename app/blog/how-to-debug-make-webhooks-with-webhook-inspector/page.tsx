@@ -9,8 +9,21 @@ export const metadata: Metadata = {
 }
 
 export default function WebhookInspectorPost() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: "How to Debug Make.com Webhooks (Without Losing Your Mind)",
+    description:
+      "Webhooks are powerful but hard to debug. Learn how to use the free Webhook Inspector tool to see exactly what data Make.com is sending, in real time.",
+    url: "https://makeintegration.com/blog/how-to-debug-make-webhooks-with-webhook-inspector",
+    datePublished: "2025-03-10",
+    author: { "@type": "Organization", name: "MakeIntegration", url: "https://makeintegration.com" },
+    publisher: { "@type": "Organization", name: "MakeIntegration", url: "https://makeintegration.com" },
+  }
+
   return (
-    <main className="min-h-screen">
+    <div className="min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Back link */}
       <div className="mx-auto max-w-3xl px-4 pt-8">
         <Link
@@ -445,6 +458,6 @@ export default function WebhookInspectorPost() {
 
         </div>
       </article>
-    </main>
+    </div>
   )
 }

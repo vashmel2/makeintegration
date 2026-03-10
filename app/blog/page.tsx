@@ -57,7 +57,7 @@ export default function BlogPage() {
   const rest = posts.filter((p) => !p.featured)
 
   return (
-    <main className="min-h-screen">
+    <div className="min-h-screen">
       {/* Header */}
       <section className="border-b border-border py-16">
         <div className="mx-auto max-w-5xl px-4">
@@ -153,6 +153,6 @@ export default function BlogPage() {
           </p>
         </div>
       </div>
-    </main>
+    </div>
   )
 }
