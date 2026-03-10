@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRight, Webhook, FileText, BarChart2, Zap } from "lucide-react"
-import { TOOLS } from "@/lib/constants"
+import { ArrowRight, Webhook, FileText, BarChart2, Zap, Clock } from "lucide-react"
+import { TOOLS, BLOG_POSTS } from "@/lib/constants"
 
 export const metadata: Metadata = {
   title: "MakeIntegration - Free Tools for Make.com Builders",
@@ -57,7 +57,7 @@ export default function HomePage() {
             </h1>
 
             <p className="mt-6 text-lg text-muted-foreground sm:text-xl">
-              Free tools, deep tutorials, and — soon — a template marketplace.
+              Free tools, deep tutorials, and (soon) a template marketplace.
               Everything automation professionals need, in one place.
             </p>
 
@@ -154,42 +154,32 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* Placeholder cards — will be replaced with real data */}
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                category: "Tutorial",
-                title: "How to Debug Make.com Webhooks Like a Pro",
-                excerpt:
-                  "Learn how to use the Webhook Inspector to capture and analyze payloads in real-time.",
-              },
-              {
-                category: "Tips",
-                title: "5 Ways to Reduce Your Make.com Operation Count",
-                excerpt:
-                  "Practical techniques to optimize your scenarios and stay within your plan limits.",
-              },
-              {
-                category: "Use Case",
-                title: "Building a Lead Scoring System with Make.com",
-                excerpt:
-                  "A step-by-step guide to automatically scoring and routing inbound leads.",
-              },
-            ].map((post) => (
-              <div
-                key={post.title}
-                className="rounded-xl border border-border bg-card p-5"
+            {BLOG_POSTS.slice(0, 3).map((post) => (
+              <Link
+                key={post.slug}
+                href={`/blog/${post.slug}`}
+                className="group flex flex-col rounded-xl border border-border bg-card p-5 transition-colors hover:border-primary/30"
               >
-                <span className="text-xs font-semibold uppercase tracking-wide text-primary">
-                  {post.category}
-                </span>
-                <h3 className="mt-2 text-base font-semibold leading-snug">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${post.categoryColor}`}>
+                    {post.category}
+                  </span>
+                  <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                    <Clock className="h-3 w-3" />
+                    {post.readTime}
+                  </span>
+                </div>
+                <h3 className="text-base font-semibold leading-snug text-foreground group-hover:text-primary transition-colors">
                   {post.title}
                 </h3>
-                <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
+                <p className="mt-2 text-sm text-muted-foreground line-clamp-2 flex-1">
                   {post.excerpt}
                 </p>
-              </div>
+                <span className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
+                  Read more <ArrowRight className="h-3 w-3" />
+                </span>
+              </Link>
             ))}
           </div>
 
