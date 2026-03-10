@@ -17,7 +17,12 @@ export interface AnalysisMetrics {
   hasErrorHandler: boolean
   hasIterator: boolean
   hasAggregator: boolean
+  /** Ops for a single run taking the shortest branch at every router */
   estimatedOpsMin: number
+  /** Ops for a single run taking the longest branch at every router */
+  estimatedOpsMax: number
+  /** Modules that sit between an Iterator and its Aggregator (run N times) */
+  loopModuleCount: number
   maxNestingDepth: number
 }
 

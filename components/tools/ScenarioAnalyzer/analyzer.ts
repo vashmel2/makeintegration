@@ -233,6 +233,83 @@ function checkNestedRouters(flow: RawModule[]): Issue | null {
 }
 
 // ---------------------------------------------------------------------------
+// Router-aware operation range
+// ---------------------------------------------------------------------------
+
+/**
+ * Returns the real min/max ops for a flow by taking the shortest/longest
+ * branch at each router, rather than blindly summing all modules.
+ *
+ * Make counts each module execution as 1 op. A router with N branches only
+ * executes ONE branch per run, so only those modules actually cost ops.
+ */
+function countOpsRange(flow: RawModule[]): { min: number; max: number } {
+  let min = 0
+  let max = 0
+  for (const mod of flow) {
+    const action = getAction(mod)
+    const routes: RawRoute[] = mod.routes ?? []
+
+    if (action === "BasicRouter") {
+      // The router module itself = 1 op
+      min += 1
+      max += 1
+      if (routes.length > 0) {
+        const branchCounts = routes.map((r: RawRoute) => countOpsRange(r.flow ?? []))
+        min += Math.min(...branchCounts.map((b) => b.min))
+        max += Math.max(...branchCounts.map((b) => b.max))
+      }
+    } else {
+      min += 1
+      max += 1
+    }
+  }
+  return { min, max }
+}
+
+// ---------------------------------------------------------------------------
+// Iterator loop module count
+// ---------------------------------------------------------------------------
+
+/**
+ * Counts modules that sit between the first Iterator and its nearest
+ * Aggregator in the same linear flow — these are the modules that
+ * execute once per item, not once per run.
+ *
+ * Make's blueprint format is linear (no nested loop structure), so we
+ * scan the flat flow looking for the Iterator → Aggregator window.
+ */
+function countLoopModules(flow: RawModule[]): number {
+  // Work on the flat top-level flow only (iterators are not nested like routers)
+  let inLoop = false
+  let loopCount = 0
+  const aggregatorActions = new Set(["BasicAggregator", "BasicTextAggregator"])
+
+  for (const mod of flow) {
+    const action = getAction(mod)
+    if (action === "BasicIterator") {
+      inLoop = true
+      continue
+    }
+    if (inLoop && aggregatorActions.has(action)) {
+      inLoop = false
+      continue
+    }
+    if (inLoop) loopCount++
+  }
+
+  // Also scan inside router branches
+  for (const mod of flow) {
+    const routes: RawRoute[] = mod.routes ?? []
+    for (const route of routes) {
+      loopCount += countLoopModules(route.flow ?? [])
+    }
+  }
+
+  return loopCount
+}
+
+// ---------------------------------------------------------------------------
 // Metrics collection
 // ---------------------------------------------------------------------------
 
@@ -264,6 +341,9 @@ function collectMetrics(flow: RawModule[], meta: any): AnalysisMetrics {
     (m) => getAction(m.mod) === "BasicAggregator" || getAction(m.mod) === "BasicTextAggregator"
   )
 
+  const { min: estimatedOpsMin, max: estimatedOpsMax } = countOpsRange(flow)
+  const loopModuleCount = hasIterator ? countLoopModules(flow) : 0
+
   const triggerType: AnalysisMetrics["triggerType"] =
     flow.length === 0 ? "none" : meta.instant === true ? "instant" : "scheduled"
 
@@ -276,7 +356,9 @@ function collectMetrics(flow: RawModule[], meta: any): AnalysisMetrics {
     hasErrorHandler,
     hasIterator,
     hasAggregator,
-    estimatedOpsMin: allMods.length,
+    estimatedOpsMin,
+    estimatedOpsMax,
+    loopModuleCount,
     maxNestingDepth: maxDepth,
   }
 }

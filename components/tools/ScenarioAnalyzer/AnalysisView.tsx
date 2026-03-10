@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { RotateCcw, AlertCircle, AlertTriangle, Info, CheckCircle2, Zap, Clock, Shield, Layers, GitBranch, Box, Activity } from "lucide-react"
 import type { AnalysisResult, Issue, IssueSeverity } from "./types"
 
@@ -139,11 +140,18 @@ export function AnalysisView({
   onReset: () => void
 }) {
   const { scenarioName, healthScore, issues, metrics } = result
+  const [iterItems, setIterItems] = useState(10)
 
   const errors = issues.filter((i) => i.severity === "error")
   const warnings = issues.filter((i) => i.severity === "warning")
   const infos = issues.filter((i) => i.severity === "info")
   const allClear = issues.length === 0
+
+  // Projected ops = base ops (min, excluding loop modules) + loop modules × items
+  const baseOpsMin = metrics.estimatedOpsMin - metrics.loopModuleCount
+  const projectedOps = metrics.hasIterator
+    ? baseOpsMin + metrics.loopModuleCount * iterItems
+    : null
 
   return (
     <div className="space-y-6">
@@ -249,20 +257,55 @@ export function AnalysisView({
             }
           />
           <MetricTile
-            label="Min Ops / Run"
-            value={<span className="flex items-center gap-1.5"><Activity className="h-4 w-4 text-muted-foreground" />{metrics.estimatedOpsMin}</span>}
-            sub={metrics.hasIterator ? "more if iterating" : undefined}
+            label="Ops / Run"
+            value={
+              <span className="flex items-center gap-1.5">
+                <Activity className="h-4 w-4 text-muted-foreground" />
+                {metrics.estimatedOpsMin === metrics.estimatedOpsMax
+                  ? metrics.estimatedOpsMin
+                  : `${metrics.estimatedOpsMin}–${metrics.estimatedOpsMax}`}
+              </span>
+            }
+            sub={
+              metrics.hasIterator
+                ? "excl. loop"
+                : metrics.estimatedOpsMin !== metrics.estimatedOpsMax
+                ? "best–worst case"
+                : undefined
+            }
           />
         </div>
       </div>
 
-      {/* Operations note */}
-      {metrics.hasIterator && (
-        <div className="rounded-xl border border-yellow-500/20 bg-yellow-500/5 px-4 py-3 text-sm text-yellow-400 flex items-start gap-2">
-          <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
-          <span>
-            This scenario has an Iterator. The actual operation count per run will be higher than the minimum shown above, because every module inside the iterator loop runs once per item in the array.
-          </span>
+      {/* Iterator ops calculator */}
+      {metrics.hasIterator && projectedOps !== null && (
+        <div className="rounded-xl border border-yellow-500/20 bg-yellow-500/5 p-4 space-y-3">
+          <div className="flex items-start gap-2 text-sm text-yellow-400">
+            <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
+            <span className="font-medium">Iterator detected — actual ops depend on array size</span>
+          </div>
+          <p className="text-sm text-muted-foreground pl-6">
+            {metrics.loopModuleCount} module{metrics.loopModuleCount !== 1 ? "s" : ""} run once per item in the loop.
+            Enter how many items your iterator typically processes to estimate real cost.
+          </p>
+          <div className="pl-6 flex flex-wrap items-center gap-3">
+            <label className="text-sm text-muted-foreground">Items per run:</label>
+            <input
+              type="number"
+              min={1}
+              max={10000}
+              value={iterItems}
+              onChange={(e) => setIterItems(Math.max(1, parseInt(e.target.value) || 1))}
+              className="w-24 rounded-lg border border-border bg-muted/30 px-3 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+            />
+            <div className="rounded-lg bg-muted/40 border border-border px-3 py-1.5 text-sm">
+              <span className="text-muted-foreground">Estimated total: </span>
+              <span className="font-semibold text-foreground">{projectedOps} ops</span>
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground/60 pl-6">
+            Formula: {baseOpsMin} base ops + ({metrics.loopModuleCount} loop modules × {iterItems} items) = {projectedOps}
+          </p>
         </div>
       )}
 
