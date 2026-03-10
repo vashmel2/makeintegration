@@ -3,22 +3,33 @@ import { ArrowRight, Clock, Tag } from "lucide-react"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Blog — MakeIntegration",
+  title: "Blog | MakeIntegration",
   description:
     "Tutorials, tips, and deep dives for Make.com builders. Learn how to automate smarter.",
 }
 
 const posts = [
   {
+    slug: "how-to-document-your-make-scenarios",
+    title: "Your Make.com Scenario Works Great. Can You Explain How?",
+    excerpt:
+      "Three months after you build a scenario, opening it feels like reading someone else's code. The free Scenario Documenter turns your blueprint into clean, shareable documentation in seconds.",
+    category: "Tool Guide",
+    categoryColor: "text-blue-400 bg-blue-400/10",
+    readTime: "6 min read",
+    publishedAt: "2026-03-11",
+    featured: true,
+  },
+  {
     slug: "how-to-debug-make-webhooks-with-webhook-inspector",
     title: "How to Debug Make.com Webhooks (Without Losing Your Mind)",
     excerpt:
-      "Webhooks are powerful — but when they silently fail, debugging them feels impossible. Learn how to use the free Webhook Inspector tool to see exactly what data Make.com is sending and receiving.",
-    category: "Tutorials",
+      "Webhooks are powerful but when they silently fail, debugging them feels impossible. Learn how to use the free Webhook Inspector tool to see exactly what data Make.com is sending and receiving.",
+    category: "Tutorial",
     categoryColor: "text-orange-400 bg-orange-400/10",
     readTime: "8 min read",
     publishedAt: "2025-03-10",
-    featured: true,
+    featured: false,
   },
 ]
 
@@ -44,7 +55,7 @@ export default function BlogPage() {
             Learn Make.com, the hard-won way.
           </h1>
           <p className="mt-4 max-w-xl text-muted-foreground">
-            Tutorials, debugging guides, and workflow ideas — written by people
+            Tutorials, debugging guides, and workflow ideas. Written by people
             who&apos;ve spent too many hours staring at failed scenario runs.
           </p>
         </div>
