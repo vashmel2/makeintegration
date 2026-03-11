@@ -97,6 +97,17 @@ export const TOOLS: Tool[] = [
     href: "/tools/blueprint-diff",
     available: true,
   },
+  {
+    slug: "dependency-mapper",
+    name: "Dependency Mapper",
+    description:
+      "Upload multiple Make.com blueprints and visualize how your scenarios call each other. See which scenarios break if you change one.",
+    icon: "network",
+    tags: ["Visualization", "Dependencies", "Architecture"],
+    badge: "FREE",
+    href: "/tools/dependency-mapper",
+    available: true,
+  },
 ]
 
 export const NAV_LINKS: NavItem[] = [
@@ -120,6 +131,7 @@ export const FOOTER_LINKS = {
     { label: "Scenario Documenter", href: "/tools/scenario-documenter" },
     { label: "Scenario Analyzer", href: "/tools/scenario-analyzer" },
     { label: "Blueprint Diff", href: "/tools/blueprint-diff" },
+    { label: "Dependency Mapper", href: "/tools/dependency-mapper" },
   ],
   blog: [
     { label: "Latest Posts", href: "/blog" },

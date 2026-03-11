@@ -41,6 +41,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${BASE_URL}/tools/dependency-mapper`,
+      lastModified: new Date("2026-03-11"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${BASE_URL}/blog`,
       lastModified: new Date("2026-03-11"),
       changeFrequency: "weekly",
