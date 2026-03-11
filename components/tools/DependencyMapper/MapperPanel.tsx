@@ -154,26 +154,26 @@ function ScenarioSlot({ entry, canRemove, onChange, onRemove }: SlotProps) {
               {entry.error}
             </div>
           )}
+        </div>
+      )}
 
-          {/* Webhook URL — only shown when blueprint has a webhook trigger */}
-          {isLoaded && entry.hasWebhookTrigger && (
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium text-foreground">
-                Webhook URL for this scenario
-                <span className="ml-1 font-normal text-muted-foreground">(optional — enables connection matching)</span>
-              </label>
-              <input
-                type="url"
-                value={entry.webhookUrl}
-                onChange={(e) => onChange({ ...entry, webhookUrl: e.target.value })}
-                placeholder="https://hook.eu1.make.com/abc123…"
-                className="w-full rounded-lg border border-border bg-muted/20 px-3 py-2 text-xs font-mono text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50"
-              />
-              <p className="text-[11px] text-muted-foreground">
-                Found in Make.com: open the webhook module, click "Copy address to clipboard"
-              </p>
-            </div>
-          )}
+      {/* Webhook URL — always visible when loaded and has webhook trigger */}
+      {isLoaded && entry.hasWebhookTrigger && (
+        <div className="border-t border-border px-4 pb-4 pt-3 space-y-1.5">
+          <label className="text-xs font-medium text-foreground">
+            Webhook URL for this scenario
+            <span className="ml-1 font-normal text-muted-foreground">(optional — enables connection matching)</span>
+          </label>
+          <input
+            type="url"
+            value={entry.webhookUrl}
+            onChange={(e) => onChange({ ...entry, webhookUrl: e.target.value })}
+            placeholder="https://hook.eu1.make.com/abc123…"
+            className="w-full rounded-lg border border-border bg-muted/20 px-3 py-2 text-xs font-mono text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50"
+          />
+          <p className="text-[11px] text-muted-foreground">
+            Found in Make.com: open the webhook module, click &quot;Copy address to clipboard&quot;
+          </p>
         </div>
       )}
     </div>
