@@ -148,12 +148,6 @@ export function Header() {
           <div className="flex items-center gap-2">
             <ThemeToggle />
             <Link
-              href="/auth/login"
-              className="hidden text-sm font-medium text-muted-foreground transition-colors hover:text-foreground md:block"
-            >
-              Sign In
-            </Link>
-            <Link
               href="/tools"
               className="hidden rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 md:block"
             >
