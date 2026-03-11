@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Plus_Jakarta_Sans, Geist_Mono } from "next/font/google"
+import Script from "next/script"
 import "./globals.css"
 import { ThemeProvider } from "@/components/layout/ThemeProvider"
 import { Header } from "@/components/layout/Header"
@@ -43,6 +44,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-K96F12YHP2" strategy="afterInteractive" />
+      <Script id="gtag-init" strategy="afterInteractive">{`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-K96F12YHP2');
+      `}</Script>
       <body className={`${plusJakartaSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
