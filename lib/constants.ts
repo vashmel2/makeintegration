@@ -35,6 +35,28 @@ export const BLOG_POSTS: PostMeta[] = [
     featured: false,
   },
   {
+    slug: "how-to-compare-make-com-blueprints",
+    title: "Make.com Has No Version History. Here's What to Do When Something Breaks.",
+    excerpt:
+      "You edited a scenario, something stopped working, and now you have no idea what changed. The Blueprint Diff tool shows you exactly what is different between two blueprint versions, down to the field level.",
+    category: "Tool Guide",
+    categoryColor: "text-blue-400 bg-blue-400/10",
+    readTime: "6 min read",
+    publishedAt: "2026-03-11",
+    featured: false,
+  },
+  {
+    slug: "how-to-map-make-com-scenario-dependencies",
+    title: "Your Make.com Scenarios Are Probably More Connected Than You Think",
+    excerpt:
+      "Most Make power users run scenarios that quietly call each other via webhooks. When one breaks, others go down with it. The Dependency Mapper shows you the full picture before that happens.",
+    category: "Tool Guide",
+    categoryColor: "text-blue-400 bg-blue-400/10",
+    readTime: "7 min read",
+    publishedAt: "2026-03-11",
+    featured: false,
+  },
+  {
     slug: "how-to-debug-make-webhooks-with-webhook-inspector",
     title: "How to Debug Make.com Webhooks (Without Losing Your Mind)",
     excerpt:

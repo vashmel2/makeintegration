@@ -53,6 +53,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${BASE_URL}/blog/how-to-compare-make-com-blueprints`,
+      lastModified: new Date("2026-03-11"),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/blog/how-to-map-make-com-scenario-dependencies`,
+      lastModified: new Date("2026-03-11"),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
       url: `${BASE_URL}/blog/how-to-check-the-health-of-your-make-scenarios`,
       lastModified: new Date("2026-03-11"),
       changeFrequency: "monthly",
