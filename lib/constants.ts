@@ -86,6 +86,17 @@ export const TOOLS: Tool[] = [
     href: "/tools/scenario-analyzer",
     available: true,
   },
+  {
+    slug: "blueprint-diff",
+    name: "Blueprint Diff",
+    description:
+      "Upload two Make.com blueprint JSON files and see a human-readable breakdown of every change — added modules, removed steps, modified filters and mappings.",
+    icon: "arrow-left-right",
+    tags: ["Comparison", "Versioning", "Debugging"],
+    badge: "FREE",
+    href: "/tools/blueprint-diff",
+    available: true,
+  },
 ]
 
 export const NAV_LINKS: NavItem[] = [
@@ -108,6 +119,7 @@ export const FOOTER_LINKS = {
     { label: "Webhook Inspector", href: "/tools/webhook-inspector" },
     { label: "Scenario Documenter", href: "/tools/scenario-documenter" },
     { label: "Scenario Analyzer", href: "/tools/scenario-analyzer" },
+    { label: "Blueprint Diff", href: "/tools/blueprint-diff" },
   ],
   blog: [
     { label: "Latest Posts", href: "/blog" },

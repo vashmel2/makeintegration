@@ -1,0 +1,206 @@
+"use client"
+
+import { useState } from "react"
+import { ChevronDown, ChevronUp, RotateCcw } from "lucide-react"
+import type { BlueprintDiff, ModuleDiff, FieldChange } from "./types"
+
+// ---------------------------------------------------------------------------
+// Value formatter for field change display
+// ---------------------------------------------------------------------------
+
+function formatValue(v: unknown): string {
+  if (v === undefined || v === null) return "—"
+  if (typeof v === "string") {
+    const s = v.length > 90 ? v.slice(0, 90) + "…" : v
+    return `"${s}"`
+  }
+  if (typeof v === "number" || typeof v === "boolean") return String(v)
+  const json = JSON.stringify(v)
+  return json.length > 100 ? json.slice(0, 100) + "…" : json
+}
+
+// ---------------------------------------------------------------------------
+// Field change row
+// ---------------------------------------------------------------------------
+
+function ChangeRow({ change }: { change: FieldChange }) {
+  return (
+    <div className="grid grid-cols-[1fr_auto_1fr] items-start gap-2 py-1.5 border-t border-border/40 first:border-0">
+      <div className="min-w-0">
+        <span className="block font-mono text-[11px] text-muted-foreground mb-0.5">{change.path}</span>
+        <span className="block font-mono text-xs text-red-400 break-all leading-snug">
+          {formatValue(change.before)}
+        </span>
+      </div>
+      <span className="text-muted-foreground text-xs mt-4 shrink-0">→</span>
+      <div className="min-w-0">
+        <span className="block font-mono text-[11px] text-muted-foreground mb-0.5 invisible">x</span>
+        <span className="block font-mono text-xs text-green-400 break-all leading-snug">
+          {formatValue(change.after)}
+        </span>
+      </div>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Individual module card
+// ---------------------------------------------------------------------------
+
+const TYPE_STYLES: Record<string, { border: string; badge: string; label: string }> = {
+  added:     { border: "border-l-4 border-l-green-500", badge: "bg-green-500/10 text-green-400", label: "Added" },
+  removed:   { border: "border-l-4 border-l-red-500",   badge: "bg-red-500/10 text-red-400",     label: "Removed" },
+  changed:   { border: "border-l-4 border-l-yellow-500",badge: "bg-yellow-500/10 text-yellow-400",label: "Changed" },
+  unchanged: { border: "border-l-4 border-l-border",    badge: "bg-muted text-muted-foreground",  label: "Unchanged" },
+}
+
+function ModuleCard({ mod }: { mod: ModuleDiff }) {
+  const [expanded, setExpanded] = useState(false)
+  const styles = TYPE_STYLES[mod.type]
+  const hasChanges = mod.changes.length > 0
+
+  return (
+    <div className={`rounded-xl border border-border bg-card ${styles.border} overflow-hidden`}>
+      <div
+        className={`flex items-center justify-between px-4 py-3 ${hasChanges ? "cursor-pointer hover:bg-muted/20 transition-colors" : ""}`}
+        onClick={() => hasChanges && setExpanded((o) => !o)}
+      >
+        <div className="flex items-center gap-3 min-w-0">
+          <span className={`shrink-0 rounded-md px-2 py-0.5 text-xs font-semibold ${styles.badge}`}>
+            {styles.label}
+          </span>
+          <div className="min-w-0">
+            <span className="block font-medium text-sm text-foreground truncate">{mod.displayName}</span>
+            <span className="block text-xs text-muted-foreground mt-0.5">
+              #{mod.id} · {mod.location}
+              {mod.type === "changed" && ` · ${mod.changes.length} field${mod.changes.length > 1 ? "s" : ""} changed`}
+            </span>
+          </div>
+        </div>
+        {hasChanges && (
+          <div className="shrink-0 ml-3 text-muted-foreground">
+            {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          </div>
+        )}
+      </div>
+
+      {hasChanges && expanded && (
+        <div className="border-t border-border px-4 pb-3 pt-2">
+          {mod.changes.map((c, i) => (
+            <ChangeRow key={i} change={c} />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Main DiffView
+// ---------------------------------------------------------------------------
+
+interface DiffViewProps {
+  diff: BlueprintDiff
+  onReset: () => void
+}
+
+export function DiffView({ diff, onReset }: DiffViewProps) {
+  const [showUnchanged, setShowUnchanged] = useState(false)
+
+  const hasChanges = diff.added + diff.removed + diff.changed > 0
+  const meaningful = diff.modules.filter((m) => m.type !== "unchanged")
+  const unchanged = diff.modules.filter((m) => m.type === "unchanged")
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h2 className="text-xl font-bold text-foreground">
+            {hasChanges ? "Diff complete" : "No changes detected"}
+          </h2>
+          {diff.nameBefore !== diff.nameAfter && (
+            <p className="mt-1 text-sm text-muted-foreground">
+              Scenario name:{" "}
+              <span className="text-red-400 line-through">{diff.nameBefore}</span>{" "}
+              <span className="text-green-400">{diff.nameAfter}</span>
+            </p>
+          )}
+        </div>
+        <button
+          onClick={onReset}
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-muted/50"
+        >
+          <RotateCcw className="h-3 w-3" />
+          New diff
+        </button>
+      </div>
+
+      {/* Summary pills */}
+      <div className="flex flex-wrap gap-2">
+        {diff.removed > 0 && (
+          <span className="rounded-lg bg-red-500/10 px-3 py-1.5 text-sm font-semibold text-red-400">
+            − {diff.removed} removed
+          </span>
+        )}
+        {diff.changed > 0 && (
+          <span className="rounded-lg bg-yellow-500/10 px-3 py-1.5 text-sm font-semibold text-yellow-400">
+            ~ {diff.changed} changed
+          </span>
+        )}
+        {diff.added > 0 && (
+          <span className="rounded-lg bg-green-500/10 px-3 py-1.5 text-sm font-semibold text-green-400">
+            + {diff.added} added
+          </span>
+        )}
+        {diff.unchanged > 0 && (
+          <span className="rounded-lg bg-muted px-3 py-1.5 text-sm font-semibold text-muted-foreground">
+            {diff.unchanged} unchanged
+          </span>
+        )}
+      </div>
+
+      {/* No changes state */}
+      {!hasChanges && (
+        <div className="rounded-xl border border-border bg-card/40 px-6 py-10 text-center">
+          <p className="text-muted-foreground text-sm">
+            Both blueprints are structurally identical — same modules, same configuration.
+          </p>
+        </div>
+      )}
+
+      {/* Changed / added / removed modules */}
+      {meaningful.length > 0 && (
+        <div className="space-y-2">
+          {meaningful.map((mod) => (
+            <ModuleCard key={`${mod.type}-${mod.id}`} mod={mod} />
+          ))}
+        </div>
+      )}
+
+      {/* Unchanged toggle */}
+      {unchanged.length > 0 && (
+        <div className="space-y-2">
+          <button
+            onClick={() => setShowUnchanged((o) => !o)}
+            className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {showUnchanged ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            {showUnchanged ? "Hide" : "Show"} {unchanged.length} unchanged module{unchanged.length > 1 ? "s" : ""}
+          </button>
+          {showUnchanged && (
+            <div className="space-y-2">
+              {unchanged.map((mod) => (
+                <ModuleCard key={`unchanged-${mod.id}`} mod={mod} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      <p className="text-center text-xs text-muted-foreground">
+        Everything runs in your browser. Your blueprint data never leaves your device.
+      </p>
+    </div>
+  )
+}

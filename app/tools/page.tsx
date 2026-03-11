@@ -1,6 +1,6 @@
 import Link from "next/link"
 import type { Metadata } from "next"
-import { ArrowRight, Webhook, FileText, BarChart2 } from "lucide-react"
+import { ArrowRight, Webhook, FileText, BarChart2, ArrowLeftRight } from "lucide-react"
 import { TOOLS } from "@/lib/constants"
 
 export const metadata: Metadata = {
@@ -20,6 +20,7 @@ const toolIcons: Record<string, React.ElementType> = {
   webhook: Webhook,
   "file-text": FileText,
   "bar-chart-2": BarChart2,
+  "arrow-left-right": ArrowLeftRight,
 }
 
 export default function ToolsPage() {
