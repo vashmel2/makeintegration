@@ -4,7 +4,7 @@ import { ArrowRight, Webhook, FileText, BarChart2, ArrowLeftRight, Network } fro
 import { TOOLS } from "@/lib/constants"
 
 export const metadata: Metadata = {
-  title: "Free Make.com Tools | MakeIntegration",
+  title: "Free Make.com Tools",
   description:
     "Free, browser-based utilities for Make.com automation developers. Inspect webhooks, document scenarios, analyze health and operation costs. No login required.",
   openGraph: {

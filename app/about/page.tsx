@@ -3,7 +3,7 @@ import { Zap, Shield, Wrench, BookOpen } from "lucide-react"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "About | MakeIntegration",
+  title: "About",
   description:
     "MakeIntegration is a free toolkit for Make.com builders. Debug webhooks, document scenarios, analyze health, compare blueprints, and map dependencies — all in your browser.",
 }

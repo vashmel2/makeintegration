@@ -3,7 +3,7 @@ import { ArrowLeft, Clock, Activity, XCircle, AlertTriangle, Info } from "lucide
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Is Your Make.com Scenario Actually Built Well? | MakeIntegration",
+  title: "Is Your Make.com Scenario Actually Built Well?",
   description:
     "A working scenario and a well-built scenario are two different things. The free Scenario Analyzer gives yours a health score and flags issues before they cost you.",
 }

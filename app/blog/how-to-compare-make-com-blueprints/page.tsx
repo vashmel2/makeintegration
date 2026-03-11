@@ -3,7 +3,7 @@ import { ArrowLeft, Clock, ArrowLeftRight, XCircle, Check } from "lucide-react"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "How to Compare Two Make.com Blueprints | MakeIntegration",
+  title: "How to Compare Two Make.com Blueprints",
   description:
     "Make.com has no version history. When something breaks after an edit, there's no way to see what you changed. Here's how to diff two blueprints and find out exactly what's different.",
 }

@@ -4,7 +4,7 @@ import { ArrowRight, Webhook, FileText, BarChart2, Zap, Clock } from "lucide-rea
 import { TOOLS, BLOG_POSTS } from "@/lib/constants"
 
 export const metadata: Metadata = {
-  title: "MakeIntegration - Free Tools for Make.com Builders",
+  title: { absolute: "MakeIntegration - Free Tools for Make.com Builders" },
   description:
     "Free browser-based tools for Make.com automation builders. Inspect webhooks, document scenarios, analyze health and operation costs. No login required.",
   openGraph: {

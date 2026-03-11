@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Terms of Service | MakeIntegration",
+  title: "Terms of Service",
   description: "Terms of Service for MakeIntegration.com — the rules governing your use of our free Make.com tools.",
 }
 

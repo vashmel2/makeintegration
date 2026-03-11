@@ -4,7 +4,7 @@ import type { Metadata } from "next"
 import { BLOG_POSTS } from "@/lib/constants"
 
 export const metadata: Metadata = {
-  title: "Blog | MakeIntegration",
+  title: "Blog",
   description:
     "Tutorials, tips, and deep dives for Make.com builders. Learn how to automate smarter.",
   openGraph: {

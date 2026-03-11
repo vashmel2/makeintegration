@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | MakeIntegration",
+  title: "Privacy Policy",
   description: "Privacy Policy for MakeIntegration.com — what data we collect, how we use it, and how we protect it.",
 }
 

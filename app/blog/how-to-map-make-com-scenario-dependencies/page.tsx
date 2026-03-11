@@ -3,7 +3,7 @@ import { ArrowLeft, Clock, Network, XCircle, Check } from "lucide-react"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "How to Map Dependencies Between Make.com Scenarios | MakeIntegration",
+  title: "How to Map Dependencies Between Make.com Scenarios",
   description:
     "Most Make.com power users run scenarios that call each other via webhooks. If one breaks, others go down with it. Here's how to visualize those dependencies before it becomes a problem.",
 }

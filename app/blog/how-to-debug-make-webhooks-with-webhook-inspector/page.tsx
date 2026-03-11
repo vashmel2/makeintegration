@@ -3,7 +3,7 @@ import { ArrowLeft, Clock, Webhook, AlertTriangle, CheckCircle, Zap } from "luci
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "How to Debug Make.com Webhooks | MakeIntegration",
+  title: "How to Debug Make.com Webhooks",
   description:
     "Webhooks are powerful but hard to debug. Learn how to use the free Webhook Inspector tool to see exactly what data Make.com is sending, in real time.",
 }

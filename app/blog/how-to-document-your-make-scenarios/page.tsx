@@ -3,7 +3,7 @@ import { ArrowLeft, Clock, FileText, CheckCircle, Share2, Users } from "lucide-r
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "How to Document Your Make.com Scenarios | MakeIntegration",
+  title: "How to Document Your Make.com Scenarios",
   description:
     "Built a Make.com scenario and now nobody (including you) knows how it works? The free Scenario Documenter turns your blueprint into clean, readable docs in seconds.",
 }
