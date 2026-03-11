@@ -1,11 +1,14 @@
 "use client"
 
 import { useEffect, useState, useCallback } from "react"
-import { Copy, Check, RefreshCw, Trash2 } from "lucide-react"
+import { Copy, Check, RefreshCw, Trash2, AlertTriangle } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
 import { RequestList } from "./RequestList"
 import { RequestDetail } from "./RequestDetail"
 import type { WebhookRequest } from "./types"
+
+const SESSION_MAX_AGE_MS = 2 * 60 * 60 * 1000  // 2 hours — must match API route
+const MAX_REQUESTS = 25
 
 function generateSessionToken(): string {
   const chars = "abcdefghijklmnopqrstuvwxyz0123456789"
@@ -23,6 +26,7 @@ export function InspectorPanel() {
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [sessionExpired, setSessionExpired] = useState(false)
 
   const supabase = createClient()
 
@@ -35,16 +39,38 @@ export function InspectorPanel() {
   const initSession = useCallback(
     async (token?: string) => {
       setLoading(true)
+      setSessionExpired(false)
       const t = token || generateSessionToken()
 
       // Try to find existing session
       const { data: existing } = await supabase
         .from("webhook_sessions")
-        .select("id, session_token")
+        .select("id, session_token, created_at")
         .eq("session_token", t)
         .single()
 
       if (existing) {
+        // Check if session has expired client-side
+        const age = Date.now() - new Date(existing.created_at).getTime()
+        if (age > SESSION_MAX_AGE_MS) {
+          // Expired — silently create a fresh one instead
+          const { data: newSession } = await supabase
+            .from("webhook_sessions")
+            .insert({ session_token: generateSessionToken() })
+            .select("id, session_token")
+            .single()
+          if (newSession) {
+            setSessionToken(newSession.session_token)
+            setSessionId(newSession.id)
+            setRequests([])
+            const url = new URL(window.location.href)
+            url.searchParams.set("session", newSession.session_token)
+            window.history.replaceState({}, "", url.toString())
+          }
+          setLoading(false)
+          return
+        }
+
         setSessionToken(existing.session_token)
         setSessionId(existing.id)
 
@@ -97,6 +123,13 @@ export function InspectorPanel() {
     }
   }, [sessionToken])
 
+  // Auto-expire session in the UI after 2 hours
+  useEffect(() => {
+    if (!sessionId) return
+    const timer = setTimeout(() => setSessionExpired(true), SESSION_MAX_AGE_MS)
+    return () => clearTimeout(timer)
+  }, [sessionId])
+
   // Supabase Realtime subscription
   useEffect(() => {
     if (!sessionId) return
@@ -146,6 +179,8 @@ export function InspectorPanel() {
   }
 
   const selectedRequest = requests.find((r) => r.id === selectedId) || null
+  const nearCap = requests.length >= MAX_REQUESTS - 5 && requests.length < MAX_REQUESTS
+  const atCap = requests.length >= MAX_REQUESTS
 
   if (loading) {
     return (
@@ -160,6 +195,38 @@ export function InspectorPanel() {
 
   return (
     <div className="flex flex-col gap-4">
+      {/* Warning banners */}
+      {sessionExpired && (
+        <div className="flex items-center gap-2 rounded-xl border border-yellow-500/20 bg-yellow-500/5 px-4 py-3 text-sm text-yellow-400">
+          <AlertTriangle className="h-4 w-4 shrink-0" />
+          <span>This session has expired (2-hour limit). Start a new session to continue.</span>
+          <button
+            onClick={handleNewSession}
+            className="ml-auto shrink-0 rounded-lg bg-yellow-500/10 px-3 py-1 text-xs font-semibold hover:bg-yellow-500/20 transition-colors"
+          >
+            New Session
+          </button>
+        </div>
+      )}
+      {atCap && !sessionExpired && (
+        <div className="flex items-center gap-2 rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3 text-sm text-red-400">
+          <AlertTriangle className="h-4 w-4 shrink-0" />
+          <span>Session full ({MAX_REQUESTS}/{MAX_REQUESTS} requests). Clear requests or start a new session.</span>
+          <button
+            onClick={handleNewSession}
+            className="ml-auto shrink-0 rounded-lg bg-red-500/10 px-3 py-1 text-xs font-semibold hover:bg-red-500/20 transition-colors"
+          >
+            New Session
+          </button>
+        </div>
+      )}
+      {nearCap && !atCap && !sessionExpired && (
+        <div className="flex items-center gap-2 rounded-xl border border-yellow-500/20 bg-yellow-500/5 px-4 py-3 text-sm text-yellow-400">
+          <AlertTriangle className="h-4 w-4 shrink-0" />
+          <span>{requests.length}/{MAX_REQUESTS} requests used. Clear or start a new session soon.</span>
+        </div>
+      )}
+
       {/* Endpoint URL bar */}
       <div className="flex flex-col gap-2 rounded-xl border border-border bg-card p-4 sm:flex-row sm:items-center sm:gap-3">
         <div className="flex-1">
@@ -209,7 +276,7 @@ export function InspectorPanel() {
           <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
         </span>
         Listening for incoming requests...
-        <span className="ml-auto">{requests.length} request{requests.length !== 1 ? "s" : ""}</span>
+        <span className="ml-auto">{requests.length}/{MAX_REQUESTS} requests</span>
       </div>
 
       {/* Inspector split view */}
