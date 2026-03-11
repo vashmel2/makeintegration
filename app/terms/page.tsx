@@ -140,10 +140,8 @@ export default function TermsPage() {
             arising out of or in connection with your use of or inability to use the service.
           </p>
           <p>
-            In no event shall our total liability to you for all claims arising from your
-            use of the Service exceed the greater of (a) the amount you paid us in the
-            12 months preceding the claim, or (b) USD $10. Because the Service is currently
-            free, this means our maximum liability is USD $10.
+            To the maximum extent permitted by law, MakeIntegration&apos;s total liability
+            for any claim arising from your use of the Service shall not exceed USD $10.
           </p>
           <p>
             Some jurisdictions do not allow the exclusion or limitation of certain damages.
@@ -199,8 +197,8 @@ export default function TermsPage() {
           <h2 className="text-lg font-bold text-foreground">13. Contact</h2>
           <p>
             For questions about these Terms, contact us at:{" "}
-            <a href="mailto:legal@makeintegration.com" className="text-primary hover:underline">
-              legal@makeintegration.com
+            <a href="mailto:support@makeintegration.com" className="text-primary hover:underline">
+              support@makeintegration.com
             </a>
           </p>
         </section>

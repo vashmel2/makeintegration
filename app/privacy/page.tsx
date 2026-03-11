@@ -190,8 +190,8 @@ export default function PrivacyPage() {
           <h2 className="text-lg font-bold text-foreground">10. Contact</h2>
           <p>
             For privacy-related questions or requests, contact us at:{" "}
-            <a href="mailto:privacy@makeintegration.com" className="text-primary hover:underline">
-              privacy@makeintegration.com
+            <a href="mailto:support@makeintegration.com" className="text-primary hover:underline">
+              support@makeintegration.com
             </a>
           </p>
         </section>
