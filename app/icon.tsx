@@ -11,25 +11,25 @@ export default function Icon() {
         style={{
           width: "32px",
           height: "32px",
-          background: "#FF6B35",
-          borderRadius: "8px",
+          background: "#0F1117",
+          borderRadius: "7px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontFamily: "sans-serif",
         }}
       >
-        <span
-          style={{
-            color: "#ffffff",
-            fontSize: "16px",
-            fontWeight: "800",
-            letterSpacing: "-0.5px",
-            lineHeight: "1",
-          }}
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#FF6B35"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
-          MI
-        </span>
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+        </svg>
       </div>
     ),
     { ...size }
