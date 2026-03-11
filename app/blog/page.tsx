@@ -40,8 +40,7 @@ export default function BlogPage() {
             Learn Make.com, the hard-won way.
           </h1>
           <p className="mt-4 max-w-xl text-muted-foreground">
-            Tutorials, debugging guides, and workflow ideas. Written by people
-            who&apos;ve spent too many hours staring at failed scenario runs.
+            Built by Make.com power users. Tutorials, debugging guides, and workflow ideas worth bookmarking.
           </p>
         </div>
       </section>
