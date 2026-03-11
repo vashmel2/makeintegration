@@ -84,27 +84,22 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Newsletter bar */}
+        {/* Support bar */}
         <div className="mt-10 rounded-xl border border-border bg-muted/50 p-5 sm:flex sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm font-semibold">Stay in the loop</p>
+            <p className="text-sm font-semibold">All tools are free. Keep them that way.</p>
             <p className="mt-0.5 text-sm text-muted-foreground">
-              Get Make.com tips, tool updates, and tutorials in your inbox.
+              If MakeIntegration saves you time, a coffee helps cover the costs.
             </p>
           </div>
-          <form className="mt-3 flex gap-2 sm:mt-0 sm:ml-4 sm:shrink-0">
-            <input
-              type="email"
-              placeholder="you@example.com"
-              className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary sm:w-56"
-            />
-            <button
-              type="submit"
-              className="shrink-0 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
-            >
-              Subscribe
-            </button>
-          </form>
+          <a
+            href="https://paypal.me/makeintegration"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex shrink-0 items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 sm:mt-0 sm:ml-4"
+          >
+            ☕ Buy us a coffee
+          </a>
         </div>
 
         {/* Bottom bar */}

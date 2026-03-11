@@ -163,7 +163,6 @@ export const FOOTER_LINKS = {
   ],
   company: [
     { label: "About", href: "/about" },
-    { label: "Newsletter", href: "#newsletter" },
-    { label: "Twitter / X", href: "https://twitter.com", external: true },
+    { label: "Support Us", href: "https://paypal.me/makeintegration", external: true },
   ],
 }

@@ -194,35 +194,28 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Marketplace teaser */}
+      {/* Support section */}
       <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
         <div className="rounded-2xl border border-primary/20 bg-linear-to-br from-primary/5 via-card to-card p-8 sm:p-12">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="text-xs font-semibold uppercase tracking-widest text-primary">
-              Coming Soon
-            </span>
-            <h2 className="mt-2 text-2xl font-bold sm:text-3xl">
-              Template Marketplace
+            <span className="text-3xl">☕</span>
+            <h2 className="mt-3 text-2xl font-bold sm:text-3xl">
+              All tools are free. Forever.
             </h2>
             <p className="mt-3 text-muted-foreground">
-              Buy and sell production-ready Make.com scenario templates from
-              verified builders. Skip the setup — launch automations in minutes.
+              No paywalls, no accounts, no limits on how much you use them.
+              If MakeIntegration saves you time, a coffee keeps the server lights on.
             </p>
-            <form className="mt-6 flex flex-col items-center gap-2 sm:flex-row sm:justify-center">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary sm:w-72"
-              />
-              <button
-                type="submit"
-                className="w-full rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 sm:w-auto"
-              >
-                Notify Me
-              </button>
-            </form>
+            <a
+              href="https://paypal.me/makeintegration"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+            >
+              ☕ Buy us a coffee
+            </a>
             <p className="mt-3 text-xs text-muted-foreground">
-              No spam. Just a heads-up when it launches.
+              Opens PayPal. No account required to donate.
             </p>
           </div>
         </div>
