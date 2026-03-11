@@ -141,7 +141,7 @@ function ScenarioSlot({ entry, canRemove, onChange, onRemove }: SlotProps) {
               Browse file
             </button>
             {entry.filename && (
-              <span className="text-xs text-muted-foreground truncate max-w-[200px]">{entry.filename}</span>
+              <span className="text-xs text-muted-foreground truncate max-w-50">{entry.filename}</span>
             )}
           </div>
           <input ref={fileRef} type="file" accept=".json,application/json" className="hidden"

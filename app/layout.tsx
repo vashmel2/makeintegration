@@ -1,10 +1,12 @@
 import type { Metadata } from "next"
 import { Plus_Jakarta_Sans, Geist_Mono } from "next/font/google"
 import Script from "next/script"
+import { Suspense } from "react"
 import "./globals.css"
 import { ThemeProvider } from "@/components/layout/ThemeProvider"
 import { Header } from "@/components/layout/Header"
 import { Footer } from "@/components/layout/Footer"
+import { GoogleAnalytics } from "@/components/layout/GoogleAnalytics"
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -63,6 +65,9 @@ export default function RootLayout({
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
+          <Suspense fallback={null}>
+            <GoogleAnalytics />
+          </Suspense>
         </ThemeProvider>
       </body>
     </html>

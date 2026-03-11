@@ -280,7 +280,7 @@ export function InspectorPanel() {
       </div>
 
       {/* Inspector split view */}
-      <div className="grid min-h-[500px] gap-4 lg:grid-cols-[320px_1fr]">
+      <div className="grid min-h-125 gap-4 lg:grid-cols-[320px_1fr]">
         <RequestList
           requests={requests}
           selectedId={selectedId}
